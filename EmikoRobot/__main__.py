@@ -5,11 +5,11 @@ import importlib
 import time
 import re
 import sys
-import traceback 
+import traceback
 from sys import argv
 import EmikoRobot.modules.sql.users_sql as sql
 from typing import Optional
-from EmikoRobot import pbot, telethn 
+from EmikoRobot import pbot, telethn
 from random import choice
 from telegram import __version__ as peler
 from platform import python_version as memek
@@ -80,6 +80,7 @@ def get_readable_time(seconds: int) -> str:
 
     return ping_time
 
+
 pic_list = [
     "https://te.legra.ph/file/dd1edbad33718b9521d31.jpg",
     "https://te.legra.ph/file/79092be2eeb4668a9e3be.jpg",
@@ -94,7 +95,7 @@ pic_list = [
     "https://te.legra.ph/file/562396308049c01531315.jpg",
     "https://te.legra.ph/file/c941d5cf0c8910c38ab2c.jpg",
 ]
-    
+
 
 SuzuneHorikitarobot_IMG = choice(pic_list)
 
@@ -110,15 +111,18 @@ Join My Updates Channel to get information on all the latest updates.
 buttons = [
     [
         InlineKeyboardButton(
-            text="Add Me To Your Group", url="https://t.me/Suzune_Superbot?startgroup=true"),
+            text="Add Me To Your Group",
+            url="https://t.me/Suzune_Superbot?startgroup=true",
+        ),
     ],
     [
         InlineKeyboardButton(text="Support Chat", url="https://t.me/Suzune_Support"),
-        InlineKeyboardButton(
-            text="Updates Channel", url="https://t.me/SuzuneSuperbot"),
+        InlineKeyboardButton(text="Updates Channel", url="https://t.me/SuzuneSuperbot"),
     ],
     [
-        InlineKeyboardButton(text="•Source Code•", url="https://github.com/desinobita/SuzuneHorikita"),
+        InlineKeyboardButton(
+            text="•Source Code•", url="https://github.com/desinobita/SuzuneHorikita"
+        ),
     ],
 ]
 
@@ -128,7 +132,6 @@ HELP_STRINGS = """
 AI Chatbot, Anime, Music, Notes, Filters, NSFW and more!
  All commands can either be used with / or !.
  Reach out for support: @Suzune_Support.*"""
-
 
 
 DONATE_STRING = """Glad to hear you want to donate!
@@ -193,13 +196,11 @@ def send_help(chat_id, text, keyboard=None):
     )
 
 
-
 def test(update: Update, context: CallbackContext):
     # pprint(eval(str(update)))
     # update.effective_message.reply_text("Hola tester! _I_ *have* markdown", parse_mode=ParseMode.MARKDOWN)
     update.effective_message.reply_text("This person edited a message")
     print(update.effective_message)
-
 
 
 def start(update: Update, context: CallbackContext):
@@ -217,7 +218,13 @@ def start(update: Update, context: CallbackContext):
                     update.effective_chat.id,
                     HELPABLE[mod].__help__,
                     InlineKeyboardMarkup(
-                        [[InlineKeyboardButton(text="⬅️ BACK", callback_data="help_back")]]
+                        [
+                            [
+                                InlineKeyboardButton(
+                                    text="⬅️ BACK", callback_data="help_back"
+                                )
+                            ]
+                        ]
                     ),
                 )
 
@@ -244,7 +251,8 @@ def start(update: Update, context: CallbackContext):
             )
     else:
         update.effective_message.reply_photo(
-            SuzuneHorikitarobot_IMG, caption= "I'm awake already!\n<b>Haven't slept since:</b> <code>{}</code>".format(
+            SuzuneHorikitarobot_IMG,
+            caption="I'm awake already!\n<b>Haven't slept since:</b> <code>{}</code>".format(
                 uptime
             ),
             parse_mode=ParseMode.HTML,
@@ -252,7 +260,8 @@ def start(update: Update, context: CallbackContext):
                 [[InlineKeyboardButton(text="Sᴜᴘᴘᴏʀᴛ", url="t.me/Suzune_Support ")]]
             ),
         )
-        
+
+
 def error_handler(update, context):
     """Log the error and send a telegram message to notify the developer."""
     # Log the error before we do anything else, so we can see it even if something breaks.
@@ -311,7 +320,6 @@ def error_callback(update: Update, context: CallbackContext):
         # handle all other telegram related errors
 
 
-
 def help_button(update, context):
     query = update.callback_query
     mod_match = re.match(r"help_module\((.+?)\)", query.data)
@@ -325,9 +333,7 @@ def help_button(update, context):
         if mod_match:
             module = mod_match.group(1)
             text = (
-                "Hᴇʀᴇ Iꜱ Tʜᴇ Hᴇʟᴘ「*{}*」 Mᴏᴅᴜʟᴇ:\n".format(
-                    HELPABLE[module].__mod_name__
-                )
+                "Hᴇʀᴇ Iꜱ Tʜᴇ Hᴇʟᴘ「*{}*」 Mᴏᴅᴜʟᴇ:\n".format(HELPABLE[module].__mod_name__)
                 + HELPABLE[module].__help__
             )
             query.message.edit_text(
@@ -376,7 +382,6 @@ def help_button(update, context):
         pass
 
 
-
 def SuzuneHorikitarobot_about_callback(update, context):
     query = update.callback_query
     if query.data == "SuzuneHorikitarobot_":
@@ -391,14 +396,16 @@ def SuzuneHorikitarobot_about_callback(update, context):
             reply_markup=InlineKeyboardMarkup(
                 [
                     [
-                        InlineKeyboardButton(
-                            text="Bᴜɢ'ꜱ", url="t.me/Suzune_Support "
-                        ),
+                        InlineKeyboardButton(text="Bᴜɢ'ꜱ", url="t.me/Suzune_Support "),
                         InlineKeyboardButton(
                             text="Bᴏᴛ Lɪꜱᴛ", url="https://t.me/SuzuneSuperbot /32"
                         ),
                     ],
-                    [InlineKeyboardButton(text="Back", callback_data="SuzuneHorikitarobot_back")],
+                    [
+                        InlineKeyboardButton(
+                            text="Back", callback_data="SuzuneHorikitarobot_back"
+                        )
+                    ],
                 ]
             ),
         )
@@ -406,20 +413,20 @@ def SuzuneHorikitarobot_about_callback(update, context):
         first_name = update.effective_user.first_name
         uptime = get_readable_time((time.time() - StartTime))
         query.message.edit_text(
-                PM_START_TEXT.format(
-                    escape_markdown(first_name),
-                    escape_markdown(uptime),
-                    sql.num_users(),
-                    sql.num_chats()),
-                reply_markup=InlineKeyboardMarkup(buttons),
-                parse_mode=ParseMode.MARKDOWN,
-                timeout=60,
-                disable_web_page_preview=False,
+            PM_START_TEXT.format(
+                escape_markdown(first_name),
+                escape_markdown(uptime),
+                sql.num_users(),
+                sql.num_chats(),
+            ),
+            reply_markup=InlineKeyboardMarkup(buttons),
+            parse_mode=ParseMode.MARKDOWN,
+            timeout=60,
+            disable_web_page_preview=False,
         )
     elif query.data == "SuzuneHorikitarobot_basichelp":
         query.message.edit_text(
             text=f"*Here's basic Help regarding* *How to use Me?*"
-            
             f"\n\n Firstly Add {dispatcher.bot.first_name} to your group by pressing [here](http://t.me/{dispatcher.bot.username}?startgroup=true)\n"
             f"\n After adding promote me manually with full rights for faster experience.\n"
             f"\n Than send /admincache@SuzuneHorikitaRobot in that chat to refresh admin list in My database.\n"
@@ -429,25 +436,33 @@ def SuzuneHorikitarobot_about_callback(update, context):
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
                 [
-                 [
-                    InlineKeyboardButton(text="Aᴅᴍɪɴ", callback_data="SuzuneHorikitarobot_admin"),
-                    InlineKeyboardButton(text="Nᴏᴛᴇꜱ", callback_data="SuzuneHorikitarobot_notes"),
-                 ],
-                 [
-                    InlineKeyboardButton(text="Sᴜᴘᴘᴏʀᴛ", callback_data="SuzuneHorikitarobot_support"),
-                    InlineKeyboardButton(text="Cʀᴇᴅɪᴛ", callback_data="SuzuneHorikitarobot_credit"),
-                 ],
-                 [
-                    InlineKeyboardButton(text="Back", callback_data="SuzuneHorikitarobot_back"),
-                 
-                 ]
+                    [
+                        InlineKeyboardButton(
+                            text="Aᴅᴍɪɴ", callback_data="SuzuneHorikitarobot_admin"
+                        ),
+                        InlineKeyboardButton(
+                            text="Nᴏᴛᴇꜱ", callback_data="SuzuneHorikitarobot_notes"
+                        ),
+                    ],
+                    [
+                        InlineKeyboardButton(
+                            text="Sᴜᴘᴘᴏʀᴛ", callback_data="SuzuneHorikitarobot_support"
+                        ),
+                        InlineKeyboardButton(
+                            text="Cʀᴇᴅɪᴛ", callback_data="SuzuneHorikitarobot_credit"
+                        ),
+                    ],
+                    [
+                        InlineKeyboardButton(
+                            text="Back", callback_data="SuzuneHorikitarobot_back"
+                        ),
+                    ],
                 ]
             ),
         )
     elif query.data == "SuzuneHorikitarobot_admin":
         query.message.edit_text(
             text=f"*Let's Make Your Group Bit Effective Now*"
-            
             f"\n Congragulations, SuzuneHorikitaRobot now ready to manage your group."
             f"\n\n*Admin Tools*"
             f"\n Basic Admin tools help you to protect and powerup your group."
@@ -458,26 +473,36 @@ def SuzuneHorikitarobot_about_callback(update, context):
             parse_mode=ParseMode.MARKDOWN,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
-                [[InlineKeyboardButton(text="Back", callback_data="SuzuneHorikitarobot_basichelp")]]
+                [
+                    [
+                        InlineKeyboardButton(
+                            text="Back", callback_data="SuzuneHorikitarobot_basichelp"
+                        )
+                    ]
+                ]
             ),
         )
 
     elif query.data == "SuzuneHorikitarobot_notes":
         query.message.edit_text(
             text=f"<b> Setting Up Notes</b>"
-            
             f"\n You can save message/media/audio or anything as notes"
             f"\n to get a note simply use # at the beginning of a word"
             f"\n\n You can also set buttons for notes and filters (refer help menu)",
             parse_mode=ParseMode.HTML,
             reply_markup=InlineKeyboardMarkup(
-                [[InlineKeyboardButton(text="Back", callback_data="SuzuneHorikitarobot_basichelp")]]
+                [
+                    [
+                        InlineKeyboardButton(
+                            text="Back", callback_data="SuzuneHorikitarobot_basichelp"
+                        )
+                    ]
+                ]
             ),
         )
     elif query.data == "SuzuneHorikitarobot_asst":
         query.message.edit_text(
             text=f"*Hᴇʀᴇ Iꜱ Tʜᴇ Hᴇʟᴘ 「Aꜱꜱɪꜱᴛᴀɴᴛ」 Mᴏᴅᴜʟᴇ:*"
-            
             f"\n*SETUP ASSISTANT*"
             f"\n\n 1.) first, add me to your group."
             f"\n\n 2.) then promote me as admin and give all permissions except anonymous admin."
@@ -488,13 +513,18 @@ def SuzuneHorikitarobot_about_callback(update, context):
             parse_mode=ParseMode.MARKDOWN,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
-                [[InlineKeyboardButton(text="Back", callback_data="SuzuneHorikitarobot_back")]]
+                [
+                    [
+                        InlineKeyboardButton(
+                            text="Back", callback_data="SuzuneHorikitarobot_back"
+                        )
+                    ]
+                ]
             ),
         )
     elif query.data == "SuzuneHorikitarobot_admin":
         query.message.edit_text(
             text=f"*Let's Make Your Group Bit Effective Now*"
-            
             f"\n Congragulations, SuzuneHorikitaRobot now ready to manage your group."
             f"\n\n*Admin Tools*"
             f"\n Basic Admin tools help you to protect and powerup your group."
@@ -505,57 +535,71 @@ def SuzuneHorikitarobot_about_callback(update, context):
             parse_mode=ParseMode.MARKDOWN,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
-                [[InlineKeyboardButton(text="Back", callback_data="SuzuneHorikitarobot_basichelp")]]
+                [
+                    [
+                        InlineKeyboardButton(
+                            text="Back", callback_data="SuzuneHorikitarobot_basichelp"
+                        )
+                    ]
+                ]
             ),
-        )    
+        )
     elif query.data == "SuzuneHorikitarobot_support":
         query.message.edit_text(
-            text="* SuzuneHorikita Support Chats*"
-            
-            "\n\n Join Support Group/Channel",
+            text="* SuzuneHorikita Support Chats*" "\n\n Join Support Group/Channel",
             parse_mode=ParseMode.MARKDOWN,
             reply_markup=InlineKeyboardMarkup(
                 [
-                 [
-                    InlineKeyboardButton(text="Lᴏɢ'ꜱ", url="t.me/SuzuneHorikitaLogs"),
-                    InlineKeyboardButton(text="Nᴇᴡꜱ", url="t.me/Suzune_Support "),
-                 ],
-                 [
-                    InlineKeyboardButton(text="Sᴜᴘᴘᴏʀᴛ", url="t.me/Suzune_Support "),
-                    InlineKeyboardButton(text="Uᴘᴅᴀᴛᴇꜱ", url="https://t.me/SuzuneSuperbot "),
-                 ],
-                 [
-                    InlineKeyboardButton(text="Back", callback_data="SuzuneHorikitarobot_basichelp"),
-                 
-                 ]
+                    [
+                        InlineKeyboardButton(
+                            text="Lᴏɢ'ꜱ", url="t.me/SuzuneHorikitaLogs"
+                        ),
+                        InlineKeyboardButton(text="Nᴇᴡꜱ", url="t.me/Suzune_Support "),
+                    ],
+                    [
+                        InlineKeyboardButton(
+                            text="Sᴜᴘᴘᴏʀᴛ", url="t.me/Suzune_Support "
+                        ),
+                        InlineKeyboardButton(
+                            text="Uᴘᴅᴀᴛᴇꜱ", url="https://t.me/SuzuneSuperbot "
+                        ),
+                    ],
+                    [
+                        InlineKeyboardButton(
+                            text="Back", callback_data="SuzuneHorikitarobot_basichelp"
+                        ),
+                    ],
                 ]
             ),
         )
     elif query.data == "SuzuneHorikitarobot_credit":
         query.message.edit_text(
             text=f"<b> CREDIT FOR SuzuneHorikita DEV'S</b>\n"
-            
             f"\n> Here Some Developers Helping in Making The SuzuneHorikita Bot",
             parse_mode=ParseMode.HTML,
             reply_markup=InlineKeyboardMarkup(
                 [
-                 [
-                    InlineKeyboardButton(text="Venom", url="t.me/TheVenomXD"),
-                    InlineKeyboardButton(text="RiZoel", url="t.me/TheRiZoeL"),
-                 ],
-                 [
-                    InlineKeyboardButton(text="Kawaki", url="t.me/SimpleAsFuckAyanokojiOpp"),
-                    InlineKeyboardButton(text="Dᴇ Cᴏᴅᴇ", url="https://t.me/Suzune_Support +"),
-                 ],
-                 [
-                    InlineKeyboardButton(text="Back", callback_data="SuzuneHorikitarobot_basichelp"),
-                 
-                 ]
+                    [
+                        InlineKeyboardButton(text="Venom", url="t.me/TheVenomXD"),
+                        InlineKeyboardButton(text="RiZoel", url="t.me/TheRiZoeL"),
+                    ],
+                    [
+                        InlineKeyboardButton(
+                            text="Kawaki", url="t.me/SimpleAsFuckAyanokojiOpp"
+                        ),
+                        InlineKeyboardButton(
+                            text="Dᴇ Cᴏᴅᴇ", url="https://t.me/Suzune_Support +"
+                        ),
+                    ],
+                    [
+                        InlineKeyboardButton(
+                            text="Back", callback_data="SuzuneHorikitarobot_basichelp"
+                        ),
+                    ],
                 ]
             ),
         )
-        
-        
+
 
 def Source_about_callback(update, context):
     query = update.callback_query
@@ -566,20 +610,16 @@ def Source_about_callback(update, context):
             parse_mode=ParseMode.MARKDOWN,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
-                [
-                 [
-                    InlineKeyboardButton(text="Go Back", callback_data="source_back")
-                 ]
-                ]
+                [[InlineKeyboardButton(text="Go Back", callback_data="source_back")]]
             ),
         )
     elif query.data == "source_back":
         query.message.edit_text(
-                PM_START_TEXT,
-                reply_markup=InlineKeyboardMarkup(buttons),
-                parse_mode=ParseMode.MARKDOWN,
-                timeout=60,
-                disable_web_page_preview=False,
+            PM_START_TEXT,
+            reply_markup=InlineKeyboardMarkup(buttons),
+            parse_mode=ParseMode.MARKDOWN,
+            timeout=60,
+            disable_web_page_preview=False,
         )
 
 
@@ -689,7 +729,6 @@ def send_settings(chat_id, user_id, user=False):
             )
 
 
-
 def settings_button(update: Update, context: CallbackContext):
     query = update.callback_query
     user = update.effective_user
@@ -773,7 +812,6 @@ def settings_button(update: Update, context: CallbackContext):
             LOGGER.exception("Exception in settings buttons. %s", str(query.data))
 
 
-
 def get_settings(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
@@ -803,7 +841,6 @@ def get_settings(update: Update, context: CallbackContext):
 
     else:
         send_settings(chat.id, user.id, True)
-
 
 
 def donate(update: Update, context: CallbackContext):
@@ -880,8 +917,12 @@ def main():
     settings_handler = CommandHandler("settings", get_settings)
     settings_callback_handler = CallbackQueryHandler(settings_button, pattern=r"stngs_")
 
-    about_callback_handler = CallbackQueryHandler(SuzuneHorikitarobot_about_callback, pattern=r"SuzuneHorikitarobot_")
-    source_callback_handler = CallbackQueryHandler(Source_about_callback, pattern=r"source_")
+    about_callback_handler = CallbackQueryHandler(
+        SuzuneHorikitarobot_about_callback, pattern=r"SuzuneHorikitarobot_"
+    )
+    source_callback_handler = CallbackQueryHandler(
+        Source_about_callback, pattern=r"source_"
+    )
 
     donate_handler = CommandHandler("donate", donate)
     migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats)
